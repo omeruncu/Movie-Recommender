@@ -24,6 +24,7 @@
     <a href="https://github.com/omeruncu/Movie-Recommender/issues">Request Feature</a>
   </p>
 </p>
+
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
