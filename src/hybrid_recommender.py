@@ -3,12 +3,15 @@ from .user_based_recommender import user_based_recommender
 from .item_based_recommender import item_based_recommender
 
 
-def hybrid_recommender(user_id, total_recs=10, user_based_n=5, item_based_n=5):
+def hybrid_recommender(
+    selected_user, df_filtered, user_movie_df, movies_df, total_recs=10, user_based_n=5, item_based_n=5
+):
+
     """
     İki yöntemin önerilerini birleştirerek toplam (örneğin 10) benzersiz film önerisi sunar.
     """
-    user_based_rec = user_based_recommender(user_id)
-    item_based_rec = item_based_recommender(user_id)
+    user_based_rec = user_based_recommender(selected_user, df_filtered, user_movie_df, movies_df)
+    item_based_rec = item_based_recommender(selected_user, df_filtered, user_movie_df)
 
     hybrid = pd.concat([user_based_rec[['title']], item_based_rec[['title']]], ignore_index=True)
     hybrid_unique = hybrid.drop_duplicates().reset_index(drop=True)

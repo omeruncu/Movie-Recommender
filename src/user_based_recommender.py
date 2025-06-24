@@ -101,7 +101,9 @@ def calculate_weighted_recommendation(top_users_ratings, movies_df, rating_thres
     return recommendation_df[['title', 'weighted_rating']].drop_duplicates().head(top_n)
 
 
-def user_based_recommender(user_id):
+def user_based_recommender(
+    user_id, df_filtered: pd.DataFrame, user_movie_df: pd.DataFrame, top_n=5
+):
     """
     Tüm kullanıcı-temelli öneri sürecini çalıştırır:
       - Veri yükleme
@@ -110,7 +112,6 @@ def user_based_recommender(user_id):
       - İlk 5 filmin önerilmesi
     """
     # Ortak veri hazırlama modülünü kullan
-    df_filtered, user_movie_df = load_and_prepare_data()
     # movies_df için ayrı okuma (aynı dosyayı tekrar kullanmak için DRY kuralına uyarız çünkü data_loader modülünden de dönebilir.)
     movies_df = pd.read_csv('data/movie.csv')
 

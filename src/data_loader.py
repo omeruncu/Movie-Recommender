@@ -1,36 +1,37 @@
 import pandas as pd
 
 
-def load_and_prepare_data(movie_path=None,
-                          rating_path=None,
-                          min_votes=1000):
+def load_and_prepare_data(
+    movie_path=None,
+    rating_path=None,
+    movies_df=None,
+    ratings_df=None,
+    min_votes=1000
+):
     """
-    movie_path, rating_path ya:
-      • None ise proje içindeki data/movie.csv, data/rating.csv kullanılacak
-      • file‐like obj (Streamlit) veya string path verilebilir
+    Ya doğrudan DataFrame (movies_df, ratings_df),
+    ya path (movie_path, rating_path) ver.
     """
-    # default dosya yolları
-    default_movies = "data/movie.csv"
-    default_ratings = "data/rating.csv"
+    # Movies DataFrame'i belirle
+    if movies_df is None:
+        source = movie_path or "data/movie.csv"
+        movies_df = pd.read_csv(source)
 
-    # hem file‐like hem de path desteği için:
-    movies_src = movie_path if movie_path is not None else default_movies
-    ratings_src = rating_path if rating_path is not None else default_ratings
+    # Ratings DataFrame'i belirle
+    if ratings_df is None:
+        source = rating_path or "data/rating.csv"
+        ratings_df = pd.read_csv(source)
 
-    # pandas, UploadedFile objesini de okuyabiliyor
-    movies = pd.read_csv(movies_src)
-    ratings = pd.read_csv(ratings_src)
-
-    # merge + filtre + pivot
-    df = pd.merge(ratings, movies, on="movieId", how="inner")
-    # min_votes altı filmleri çıkar
+    # Merge + filtre + pivot
+    df = pd.merge(ratings_df, movies_df, on="movieId", how="inner")
     to_keep = df["title"].value_counts()[lambda x: x >= min_votes].index
     df_filtered = df[df["title"].isin(to_keep)].copy()
     user_movie_df = df_filtered.pivot_table(
         index="userId", columns="title", values="rating"
-    )
+    ).fillna(0)
 
     return df_filtered, user_movie_df
+
 
 
 

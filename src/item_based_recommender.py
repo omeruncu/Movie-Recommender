@@ -2,7 +2,9 @@ import pandas as pd
 from .data_loader import load_and_prepare_data
 
 
-def item_based_recommender(user_id, top_n=5):
+def item_based_recommender(
+    user_id, df_filtered: pd.DataFrame, user_movie_df: pd.DataFrame, top_n=5
+):
     """
     Kullanıcının 5 puan verdiği filmlerden en güncel olanı üzerinden
     diğer filmlerle korelasyon hesaplayarak öneri üretir.
@@ -13,8 +15,6 @@ def item_based_recommender(user_id, top_n=5):
     - En güncel filmin pivot tablodaki sütununu kullanarak diğer filmlerle korelasyonu hesaplamak.
     - Seçili film hariç en yüksek korelasyona sahip ilk 5 filmi döndürmek.
     """
-    df_filtered, user_movie_df = load_and_prepare_data()
-
     # Seçili kullanıcının verilerini al
     user_data = df_filtered[df_filtered['userId'] == user_id]
     five_star_movies = user_data[user_data['rating'] == 5]
