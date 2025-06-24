@@ -39,11 +39,11 @@ if run_button:
     algo = st.radio("4) Algoritma seç", ["User-Based", "Item-Based", "Hybrid"])
 
     if algo == "User-Based":
-        recs = user_based_recommender(selected_user, user_movie_df)
+        recs = user_based_recommender(selected_user)
     elif algo == "Item-Based":
-        recs = item_based_recommender(selected_user, user_movie_df)
+        recs = item_based_recommender(selected_user)
     else:
-        recs = hybrid_recommender(selected_user, user_movie_df)
+        recs = hybrid_recommender(selected_user)
 
     st.subheader(f"{algo} Önerileri")
     st.table(recs.head(10))
