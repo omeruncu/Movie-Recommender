@@ -1,5 +1,5 @@
 import pandas as pd
-from data_loader import load_and_prepare_data
+from .data_loader import load_and_prepare_data
 
 
 def select_user_data(df, user_id):

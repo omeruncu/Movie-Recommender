@@ -11,5 +11,6 @@ from .data_loader import get_random_user_id, load_and_prepare_data
 __all__ = [
     "user_based_recommender",
     "item_based_recommender",
-    "hybrid_recommender"
+    "hybrid_recommender",
+    "data_loader"
 ]

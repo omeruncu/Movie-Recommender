@@ -1,11 +1,11 @@
 import streamlit as st
 import pandas as pd
-from src import (
-    user_based_recommender,
-    item_based_recommender,
-    hybrid_recommender
-)
+
 from src.data_loader import load_and_prepare_data, get_random_user_id
+from src.user_based_recommender import user_based_recommender
+from src.item_based_recommender import item_based_recommender
+from src.hybrid_recommender import hybrid_recommender
+
 
 st.set_page_config(page_title="Movie Recommender", layout="centered")
 st.title("🎬 Movie Recommender Playground")

@@ -1,5 +1,5 @@
 import pandas as pd
-from data_loader import load_and_prepare_data
+from .data_loader import load_and_prepare_data
 
 
 def item_based_recommender(user_id, top_n=5):
