@@ -38,7 +38,7 @@ Similar users are detected based on the users' movie evaluation history and the 
    ```
 2. Switch to the project folder:
    ```bash
-   cd MovieLens-Recommender
+   cd Movie-Recommender
    ```
 3. Install the required Python libraries:
    ```bash
