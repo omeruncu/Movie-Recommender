@@ -35,7 +35,7 @@ if run_button :
     )
 
     # 3) Rastgele kullanıcı seç
-    selected_user = int(pd.Series(user_movie_df.index).sample(1).values[0])
+    selected_user = get_random_user_id(user_movie_df)
     st.markdown(f"**Seçilen Kullanıcı ID:** {selected_user}")
 
     # 4) Algoritmayı çağırırken DF’leri de geç
