@@ -102,7 +102,7 @@ def calculate_weighted_recommendation(top_users_ratings, movies_df, rating_thres
 
 
 def user_based_recommender(
-    user_id, df_filtered: pd.DataFrame, user_movie_df: pd.DataFrame, top_n=5
+    user_id, df_filtered: pd.DataFrame, user_movie_df: pd.DataFrame, movies_df : pd.DataFrame, top_n=5
 ):
     """
     Tüm kullanıcı-temelli öneri sürecini çalıştırır:
@@ -113,7 +113,7 @@ def user_based_recommender(
     """
     # Ortak veri hazırlama modülünü kullan
     # movies_df için ayrı okuma (aynı dosyayı tekrar kullanmak için DRY kuralına uyarız çünkü data_loader modülünden de dönebilir.)
-    movies_df = pd.read_csv('data/movie.csv')
+
 
     # Seçili kullanıcının verilerini al
     random_user_df, movies_watched = select_user_data(df_filtered, user_id)
