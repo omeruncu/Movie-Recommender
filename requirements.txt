@@ -4,3 +4,4 @@ wheel==0.45.1
 pandas==2.2.3
 numpy==2.0.1
 python==3.12.11
+streamlit==1.46.0
