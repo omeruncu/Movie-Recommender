@@ -34,7 +34,7 @@ Similar users are detected based on the users' movie evaluation history and the 
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/omeruncu/MovieLens-Recommender.git
+   git clone https://github.com/omeruncu/Movie-Recommender.git
    ```
 2. Switch to the project folder:
    ```bash
