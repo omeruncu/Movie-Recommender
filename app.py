@@ -30,12 +30,12 @@ if run_button:
             rating_path=ratings_file
         )
     else:
-        st.error("Lütfen ya hiç dosya yükleme (default kullanım) ya da her iki dosyayı birlikte yükle.")
+        st.error("Her iki dosyayı birlikte yükle.")
         st.stop()
 
-    # Bir kullanıcı seç ve algoritmayı çalıştır
-    users = user_movie_df.index.tolist()
-    selected_user = st.selectbox("3) Kullanıcı seç", users)
+    selected_user = get_random_user_id(user_movie_df)
+    st.markdown(f"**Seçilen Kullanıcı ID:** `{selected_user}`")
+
     algo = st.radio("4) Algoritma seç", ["User-Based", "Item-Based", "Hybrid"])
 
     if algo == "User-Based":
