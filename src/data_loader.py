@@ -6,7 +6,7 @@ def load_and_prepare_data(
     rating_path=None,
     movies_df=None,
     ratings_df=None,
-    min_votes=5
+    min_votes=1
 ):
     """
     Ya doğrudan DataFrame (movies_df, ratings_df),
