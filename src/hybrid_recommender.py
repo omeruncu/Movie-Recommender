@@ -1,6 +1,6 @@
 import pandas as pd
-from user_based_recommender import user_based_recommender
-from item_based_recommender import item_based_recommender
+from .user_based_recommender import user_based_recommender
+from .item_based_recommender import item_based_recommender
 
 
 def hybrid_recommender(user_id, total_recs=10, user_based_n=5, item_based_n=5):
