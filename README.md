@@ -61,7 +61,7 @@ We welcome any suggestions, improvements and development contributions! Please c
 <!-- CONTACT -->
 ## Contact
 
-* Project Link: [https://github.com/omeruncu/Movie-Recommender](https://github.com/omeruncu/Movie-Recommender)
+* Streamlit Link: [https://movie-recommender-uavfthumrpemgnza7w39uk.streamlit.app](https://movie-recommender-uavfthumrpemgnza7w39uk.streamlit.app)
 * Linkedin : [https://www.linkedin.com/in/%C3%B6mer-%C3%BC-74197b319/](https://www.linkedin.com/in/%C3%B6mer-%C3%BC-74197b319/)
 
 <!-- MARKDOWN LINKS & IMAGES -->
