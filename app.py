@@ -19,34 +19,31 @@ ratings_file = st.file_uploader("2) `rating.csv` yükle", type="csv")
 run_button = st.button("Önerileri Göster")
 
 if run_button:
-    if not movies_file or not ratings_file:
-        st.error("Lütfen her iki CSV dosyasını da yükleyin.")
+    # Eğer ikisi de yoksa hata ver:
+    if not movies_file and not ratings_file:
+        st.info("Yüklemedin, o zaman default veriyle devam ediliyor.")
+        df_filtered, user_movie_df = load_and_prepare_data()
+    elif movies_file and ratings_file:
+        st.success("Yüklenen CSV’lerle ilerleniyor.")
+        df_filtered, user_movie_df = load_and_prepare_data(
+            movie_path=movies_file,
+            rating_path=ratings_file
+        )
     else:
-        # DataFrame'leri oku ve pivot tablosunu hazırla
-        movies = pd.read_csv(movies_file)
-        ratings = pd.read_csv(ratings_file)
-        df_filtered, user_movie_df = load_and_prepare_data(movie_path=None, rating_path=None)
-        # Eğer load fonksiyonun direkt path okumaya ayarlıysa:
-        df_filtered = pd.merge(ratings, movies, on="movieId", how="left")
-        user_movie_df = df_filtered.pivot_table(
-            index="userId", columns="title", values="rating"
-        )
+        st.error("Lütfen ya hiç dosya yükleme (default kullanım) ya da her iki dosyayı birlikte yükle.")
+        st.stop()
 
-        users = list(user_movie_df.index)
-        selected_user = st.selectbox("3) Bir kullanıcı seç", users)
+    # Bir kullanıcı seç ve algoritmayı çalıştır
+    users = user_movie_df.index.tolist()
+    selected_user = st.selectbox("3) Kullanıcı seç", users)
+    algo = st.radio("4) Algoritma seç", ["User-Based", "Item-Based", "Hybrid"])
 
-        algo = st.radio(
-            "4) Algoritma seç",
-            ["User-Based", "Item-Based", "Hybrid"]
-        )
+    if algo == "User-Based":
+        recs = user_based_recommender(selected_user, user_movie_df)
+    elif algo == "Item-Based":
+        recs = item_based_recommender(selected_user, user_movie_df)
+    else:
+        recs = hybrid_recommender(selected_user, user_movie_df)
 
-        # Önerileri hesapla ve göster
-        if algo == "User-Based":
-            recs = user_based_recommender(selected_user).head(5)
-        elif algo == "Item-Based":
-            recs = item_based_recommender(selected_user).head(5)
-        else:
-            recs = hybrid_recommender(selected_user)
-
-        st.subheader(f"{algo} Önerileri")
-        st.table(recs)
+    st.subheader(f"{algo} Önerileri")
+    st.table(recs.head(10))

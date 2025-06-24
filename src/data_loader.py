@@ -1,38 +1,37 @@
 import pandas as pd
 
 
-def load_and_prepare_data(movie_path='data/movie.csv', rating_path='data/rating.csv', min_votes=1000):
+def load_and_prepare_data(movie_path=None,
+                          rating_path=None,
+                          min_votes=1000):
     """
-    Verilen movie ve rating CSV dosyalarını okuyup aşağıdaki işlemleri yapar:
-
-    - Dosyaları oku.
-    - movieId üzerinden iki veri setini birleştir.
-    - Toplam oy sayısı min_votes değerinin altında (default: 1000) olan filmleri belirle ve çıkar.
-    - Kullanıcıların (userId) satır ve film isimlerinin sütun olduğu pivot tablo oluştur.
-
-    Returns:
-        df_filtered: Filtrelenmiş birleşik dataframe.
-        user_movie_df: Pivot tablo (userId x film) – rating değerleri.
-        movies_to_remove: Çıkarılan film isimlerinin listesi.
+    movie_path, rating_path ya:
+      • None ise proje içindeki data/movie.csv, data/rating.csv kullanılacak
+      • file‐like obj (Streamlit) veya string path verilebilir
     """
-    # Dosyaları oku
-    movies = pd.read_csv(movie_path)
-    ratings = pd.read_csv(rating_path)
+    # default dosya yolları
+    default_movies = "data/movie.csv"
+    default_ratings = "data/rating.csv"
 
-    # movieId üzerinden birleştir
-    df = pd.merge(ratings, movies, on='movieId', how='left')
+    # hem file‐like hem de path desteği için:
+    movies_src = movie_path if movie_path is not None else default_movies
+    ratings_src = rating_path if rating_path is not None else default_ratings
 
-    # 1000'in altında oy alan filmleri veri setinden çıkar
-    df_filtered = df[~df['title'].isin(df['title'].value_counts()[lambda x: x < min_votes].index)].copy()
+    # pandas, UploadedFile objesini de okuyabiliyor
+    movies = pd.read_csv(movies_src)
+    ratings = pd.read_csv(ratings_src)
 
-    # Pivot tablo: index = userId, sütunlar = film isimleri, değer = rating
-    user_movie_df = df_filtered.pivot_table(index='userId', columns='title', values='rating')
-    #print("\n----- LOAD : df_filtered  -----")
-    #print(df_filtered)
-    #print("\n----- LOAD : user_movie_df  -----")
-    #print(user_movie_df)
+    # merge + filtre + pivot
+    df = pd.merge(ratings, movies, on="movieId", how="inner")
+    # min_votes altı filmleri çıkar
+    to_keep = df["title"].value_counts()[lambda x: x >= min_votes].index
+    df_filtered = df[df["title"].isin(to_keep)].copy()
+    user_movie_df = df_filtered.pivot_table(
+        index="userId", columns="title", values="rating"
+    )
 
     return df_filtered, user_movie_df
+
 
 
 def get_random_user_id(user_movie_df):
