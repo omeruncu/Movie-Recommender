@@ -18,7 +18,7 @@ movies_file = st.file_uploader("1) `movie.csv` yükle", type="csv")
 ratings_file = st.file_uploader("2) `rating.csv` yükle", type="csv")
 run_button = st.button("Önerileri Göster")
 
-if st.button("Önerileri Göster"):
+if run_button :
     if not movies_file or not ratings_file:
         st.error("Her iki dosyayı da yükleyin.")
         st.stop()
