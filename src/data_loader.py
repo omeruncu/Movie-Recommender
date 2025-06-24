@@ -19,7 +19,7 @@ def load_and_prepare_data(
 
     # Ratings DataFrame'i belirle
     if ratings_df is None:
-        source = rating_path or "data/rating.csv"
+        source = rating_path or "data/rating_small.csv"
         ratings_df = pd.read_csv(source)
 
     # Merge + filtre + pivot
